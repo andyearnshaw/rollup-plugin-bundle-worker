@@ -1,7 +1,7 @@
 var TARGET = typeof Symbol === 'undefined' ? '__target' : Symbol(),
     SCRIPT_TYPE = 'application/javascript',
     BlobBuilder = window.BlobBuilder || window.WebKitBlobBuilder || window.MozBlobBuilder || window.MSBlobBuilder,
-    URL = window.URL || window.webkitURL,
+    URL = window.URL || window.webkitURL || URL.msURL,
     Worker = window.Worker;
 
 /**
