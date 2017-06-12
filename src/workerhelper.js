@@ -21,7 +21,7 @@ export default function shimWorker (filename, fn) {
         }
         else if (Worker && !forceFallback) {
             // Convert the function's inner code to a string to construct the worker
-            var source = `${ fn }`.replace(/^function.+?{/, '').slice(0, -1),
+            var source = fn.toString().replace(/^function.+?{/, '').slice(0, -1),
                 objURL = createSourceObject(source);
 
             this[TARGET] = new Worker(objURL);
@@ -30,16 +30,16 @@ export default function shimWorker (filename, fn) {
         }
         else {
             var selfShim = {
-                    postMessage: m => {
+                    postMessage: function(m) {
                         if (o.onmessage) {
-                            setTimeout(() => o.onmessage({ data: m, target: selfShim }));
+                            setTimeout(function(){ o.onmessage({ data: m, target: selfShim }) });
                         }
                     }
                 };
 
             fn.call(selfShim);
-            this.postMessage = m => {
-                setTimeout(() => selfShim.onmessage({ data: m, target: o }));
+            this.postMessage = function(m) {
+                setTimeout(function(){ selfShim.onmessage({ data: m, target: o }) });
             };
             this.isThisThread = true;
         }
