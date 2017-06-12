@@ -53,10 +53,6 @@ if (Worker) {
         testArray = new Uint8Array(1);
 
     try {
-        // No workers via blobs in Edge 12 and IE 11 and lower :(
-        if (/(?:Trident|Edge)\/(?:[567]|12)/i.test(navigator.userAgent)) {
-            throw new Error('Not available');
-        }
         testWorker = new Worker(objURL);
 
         // Native browser on some Samsung devices throws for transferables, let's detect it
