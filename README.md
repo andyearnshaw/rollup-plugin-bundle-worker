@@ -1,3 +1,7 @@
+
+| ⚠️ This repository is no longer actively maintained, since I no longer have a requirement for web workers and rollup and I am unable to commit time to maintaining it. If you're interested in taking over, please let me know. |
+| --- |
+
 # rollup-plugin-bundle-worker
 
 Bundles a single JS file alongside your main source code as the source for a
