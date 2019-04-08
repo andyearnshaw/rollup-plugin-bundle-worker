@@ -14,5 +14,8 @@
     "worker"
   ],
   "author": "Andy Earnshaw",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "rollup": "^0.43.0"
+  }
 }
