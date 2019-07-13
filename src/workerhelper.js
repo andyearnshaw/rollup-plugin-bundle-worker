@@ -25,7 +25,7 @@ export default function shimWorker (filename, fn) {
                 objURL = createSourceObject(source);
 
             this[TARGET] = new Worker(objURL);
-            URL.revokeObjectURL(objURL);
+            wrapTerminate(this[TARGET], objURL);
             return this[TARGET];
         }
         else {
@@ -81,5 +81,16 @@ function createSourceObject(str) {
         var blob = new BlobBuilder();
         blob.append(str);
         return URL.createObjectURL(blob.getBlob(type));
+    }
+}
+
+function wrapTerminate(worker, objURL){
+    if(!worker || !objURL) return;
+    let term = worker.terminate;
+    worker.objURL = objURL;
+    worker.terminate = function(){
+        if(worker.objURL)
+            URL.revokeObjectURL(worker.objURL);
+        term.call(worker);
     }
 }
